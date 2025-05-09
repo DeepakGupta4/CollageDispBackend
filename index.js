@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     credentials:true,
-    origin:"https://collage-dispensary.vercel.app/"
+    origin: ['https://collage-dispensary.vercel.app', 'https://collage-disp-frontend.vercel.app'],
 }))
 
 

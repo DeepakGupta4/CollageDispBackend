@@ -6,7 +6,7 @@ const crypto = require('crypto')
 
 const cookieOptions = {
     httpOnly: true,
-    secure: false, // Set to true in production
+    secure: true, // Set to true in production
     sameSite: 'Lax'
 
 };
@@ -77,7 +77,7 @@ exports.sendOtp = async (req, res) => {
         await user.save();
         // for email Sending
         const mailOptions = {
-            from: 'bt22cse001@nituk.ac.in',
+            from: 'deepakguptak9369@gmail.com',
             to: email,
             subject: 'Password Reset',
             text: `You requested a password reset. Your OTP is : ${token}`
@@ -162,9 +162,9 @@ exports.addStaffsByAdmin = async (req, res) => {
         await user.save();
 
         const mailOptions = {
-            from: 'bt22cse001@nituk.ac.in',
+            from: 'deepakguptak9369@gmail.com',
             to: email,
-            subject: 'Your Password for NIT UK medicine admin portal',
+            subject: 'Your Password for SAM Bhopal medicine admin portal',
             text: `Welcome ${name}. Your Password for login in staff portal is : ${password}, You can reset your Password by clicking on Forgot password later.`
         };
 
@@ -307,7 +307,7 @@ exports.registerStudentByStaff = async (req, res) => {
 
 
         const mailOptions = {
-            from: 'bt22cse001@nituk.ac.in',
+            from: 'deepakguptak9369@gmail.com',
             to: body.email,
             subject: 'Password for your ',
             text: `Your password of. Your OTP is : ${token}`

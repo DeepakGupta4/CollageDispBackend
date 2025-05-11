@@ -7,7 +7,7 @@ const crypto = require('crypto')
 const cookieOptions = {
     httpOnly: true,
     secure: true, // Set to true in production
-    sameSite: 'Lax'
+    sameSite: 'None', // Set to 'None' for cross-origin cookies
 
 };
 

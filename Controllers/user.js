@@ -68,16 +68,28 @@ exports.login = async (req, res) => {
 exports.sendOtp = async (req, res) => {
     try {
         const { email } = req.body;
+
+        // Check if the email is provided
+        if (!email) {
+            return res.status(400).json({ error: 'Email is required' });
+        }
+
         const user = await UserModels.findOne({ email });
+
         if (!user) {
             return res.status(400).json({ error: 'User not found' });
         }
+
+        // Generate OTP
         const buffer = crypto.randomBytes(4); // Get random bytes
         const token = buffer.readUInt32BE(0) % 900000 + 100000; // Modulo to get a 6-digit number
+
+        // Update user with OTP and expiration
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour expiry
         await user.save();
-        // for email Sending
+
+        // Email configuration
         const mailOptions = {
             from: 'deepakguptak9369@gmail.com',
             to: email,
@@ -85,22 +97,26 @@ exports.sendOtp = async (req, res) => {
             text: `You requested a password reset. Your OTP is : ${token}`
         };
 
+        // Send email
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                res.status(500).json({ error: 'Server error', errorMsg: error });
+                console.error('Error sending email:', error); // Log the error
+                return res.status(500).json({ error: 'Error sending OTP email', errorMsg: error });
             } else {
-                res.status(200).json({ message: "OTP Sent to your email" })
-
+                console.log('Email sent:', info); // Log the info
+                return res.status(200).json({ message: "OTP Sent to your email" });
             }
         });
 
     } catch (err) {
-        res.status(500).json({
+        console.error('Error during OTP process:', err); // Log the error
+        return res.status(500).json({
             error: "Something Went Wrong",
             issue: err.message
-        })
+        });
     }
 }
+
 
 exports.checkOtp = async (req, res) => {
     try {

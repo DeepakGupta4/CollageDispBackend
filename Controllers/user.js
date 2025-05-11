@@ -16,8 +16,8 @@ const cookieOptions = {
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: deepakguptak9369@gmail.com,
-        pass: wwdxjasedilainl
+        user: 'deepakguptak9369@gmail.com',
+        pass: 'wwdxjasedilainl'
     }
 });
 
